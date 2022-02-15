@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="altNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top"><img src="{% static 'assets/img/TOGRA.svg' %}" alt="..." /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars ms-1"></i>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
+                    <div class="d-grid gap-3 d-md-block">
+                        <button class="btn btn-primary" type="button">Login</button>
+                        <button class="btn btn-outline-primary" type="button">Sign Up</button>
+                      </div>
+                </div>
+            </div>
+        </nav>
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb-5">
+                        <h2 class="heading-section">Assignment List</h2>
+                    </div>
+                    <div class="col-md-6 mb-5">
+                      <button type="button" class="btn btn-primary float-end">Add Assignment</button>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="table-wrap">
+                            <table class="table table-striped"">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col" class="col-md-8">Title</th>
+                                    <th scope="col">Deadline</th>
+                                    <th scope="col">Attempts</th>
+                                    <th scope="col">Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">3</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">3</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">3</th>
+                                    <td>Python: Fungsi Perulangan</td>
+                                    <td>15/01/2022</td>
+                                    <td>34</td>
+                                    <td>
+                                      <button type="button" class="btn btn-primary">
+                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                      <button type="button" class="btn btn-danger">
+                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer py-4">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2021</div>
+                    <div class="col-lg-4 my-3 my-lg-0">
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-lg-end">
+                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+{% endblock %}
