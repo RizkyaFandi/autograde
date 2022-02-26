@@ -1,4 +1,4 @@
-from dataclasses import field
+from dataclasses import field, fields
 from django import forms
 from django.forms import ModelForm
 from togra.models import *
@@ -25,16 +25,18 @@ class formAssignment(ModelForm):
             }),
         }
 
+
 class formQuest(ModelForm):
     class Meta:
         model = Pertanyaan
-        fields = ('tipe', 'instruksi', 'jawaban_benar')
+        fields= ('tipe', 'instruksi', 'jawaban_benar')
 
         labels = {
         "tipe": "Question Type",
-        "instruksi": "Question",
+        "instruksi": "Question", 
         "jawaban_benar": "Answer",
         }
+
         widgets = {
             'tipe' : forms.Select({'class' : 'form-select'}, choices=[('1','Essay'),('2','Python')]),
             'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),

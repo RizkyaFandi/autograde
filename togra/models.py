@@ -9,11 +9,11 @@ class Akun(models.Model):
 
 class Soal(models.Model):
     judul = models.CharField(max_length=100)
-    timer = models.DurationField()
+    timer = models.DurationField(null=True)
     tanggal = models.DateTimeField()
-    link_soal = models.URLField(max_length=200)
+    link_soal = models.URLField(max_length=200,null=True)
     attempts = models.IntegerField(null=True)
-    akun_id = models.ForeignKey(Akun, on_delete=models.CASCADE)
+    akun_id = models.ForeignKey(Akun, on_delete=models.CASCADE, null=True)
 
 class Pertanyaan(models.Model):
     tipe = models.CharField(max_length=10)

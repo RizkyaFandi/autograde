@@ -2,92 +2,119 @@
 {% load static %}
 
 {% block content %}
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="altNav">
-            <div class="container">
-                <a class="navbar-brand" href="#page-top"><img src="{% static 'assets/img/TOGRA.svg' %}" alt="..." /></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars ms-1"></i>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-                    <div class="d-grid gap-3 d-md-block">
-                        <button class="btn btn-primary" type="button">Login</button>
-                        <button class="btn btn-outline-primary" type="button">Register</button>
-                      </div>
-                </div>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="altNav">
+    <div class="container">
+        <a class="navbar-brand" href="#page-top"><img src="{% static 'assets/img/TOGRA.svg' %}" alt="..." /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
+            <div class="d-grid gap-3 d-md-block">
+                <button class="btn btn-primary" type="button">Login</button>
+                <button class="btn btn-outline-primary" type="button">Register</button>
             </div>
-        </nav>
-        <section class="ftco-section">
-            <div class="container">
-                <div class="row mb-5">
-                    <div class="col-md-6">
-                        <h2 class="heading-section">New Assignment</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-5">
-                        <form>
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                        </form>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col mb-5">
-                        <div class="card shadow-sm">
-                            <div class="card-body p-5">
-                                <div class="row mb-5">
-                                    <div class="col">
-                                        <h4>Question 1</h4>
-                                    </div>
-                                    <div class="col">
-                                        <div class="float-end">
-                                            <button class="btn btn-danger" type="button">Delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col mb-3">
-                                        <form>
-                                            {% csrf_token %}
-                                            {{ form1.as_p }}
-                                        </form>
-                                    </div>
+        </div>
+    </div>
+</nav>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <h2 class="heading-section">New Assignment</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-5">
+                <form id="assignform" method="post" action="/newassignment/">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-5">
+                <div class="card shadow-sm">
+                    <div class="card-body p-5">
+                        <div class="row mt-5">
+                            <div class="col">
+                                <h4>Question 1</h4>
+                            </div>
+                            <div class="col">
+                                <div class="float-end">
+                                    <button class="btn btn-danger" type="button">Delete</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="d-grid gap-3 d-md-block my-3 float-end">
-                            <button class="btn btn-outline-primary" type="button">Add Question</button>
-                            <button class="btn btn-primary" type="submit" action="/newassignment/" method="post">Save</button>
-                        </div>           
+                        <div class="row">
+                            <div class="col mb-3">
+                                <form id="questform" method="post" action="/newquest/">
+                                    {% csrf_token %}
+                                    {{ formset.management_form }}
+                                    {{ form1.as_p }}
+                                    <div style="display:none;" id="form_template">
+                                        <h4>
+                                            <div class="col mt-5" id="questnum"></div>
+                                        </h4>
+                                        {{ form1.as_p }}
+                                    </div><!-- stores empty form for javascript -->
+                                    <div id="forms"></div><!-- where the generated forms go -->
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer py-4">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2021</div>
-                    <div class="col-lg-4 my-3 my-lg-0">
-                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <div class="col-lg-4 text-lg-end">
-                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
-                    </div>
+                <div class="d-grid gap-3 d-md-block my-3 float-end">
+                    <button class="btn btn-outline-primary" type="button" id="addquest">Add Question</button>
+                    <button class="btn btn-primary" method="post" id="submitBtn">Save</button>
                 </div>
             </div>
-        </footer>
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="footer py-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2021</div>
+            <div class="col-lg-4 my-3 my-lg-0">
+                <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
+                <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script type="text/javascript">
+    $('#submitBtn').click(function () {
+        console.log("aaaaaaaaaaaaaaaaa")
 
-        <script>
-            $(function () {
-              $("#datetimepicker1").datetimepicker({
-                format: 'DD/MM/YYYY HH:mm',
-              });
-            });
-          </script>
+        $('#assignform').submit();
+        $('#questform').submit();
+
+    });
+</script>
+
+<script type="text/javascript">
+    var count = 2
+    $('#addquest').click(function () {
+        // update total form count
+        console.log("aaaaaaaaaaaaaaa")
+        // copy the template and replace prefixes with the correct index
+        // Note: Must use global replace here
+        var div = document.getElementById('questnum');
+        div.innerHTML = 'Question '+ count;
+        console.log("bbbbbbbbbbbbbb")
+        html = $('#form_template').clone().html().replace('/__prefix_/g', 1);
+        $('#forms').append(html);
+        count++
+    })
+</script>
 {% endblock %}

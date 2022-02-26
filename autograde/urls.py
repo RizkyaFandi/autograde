@@ -10,4 +10,5 @@ urlpatterns = [
     path('login/', login),
     path('register/', register),
     path('assignment/', assignment),
+    path('newquest/', AddQuest),
 ]
