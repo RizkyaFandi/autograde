@@ -1,6 +1,6 @@
 from dataclasses import field, fields
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, modelformset_factory
 from togra.models import *
 from tempus_dominus.widgets import DateTimePicker
 
@@ -26,19 +26,36 @@ class formAssignment(ModelForm):
         }
 
 
-class formQuest(ModelForm):
-    class Meta:
-        model = Pertanyaan
-        fields= ('tipe', 'instruksi', 'jawaban_benar')
+FormQuestSet = modelformset_factory(
+    Pertanyaan,
+    fields= ('tipe', 'instruksi', 'jawaban_benar'),
+    extra=1,
+    labels = {
+    "tipe": "Question Type",
+    "instruksi": "Question", 
+    "jawaban_benar": "Answer",
+    },
 
-        labels = {
-        "tipe": "Question Type",
-        "instruksi": "Question", 
-        "jawaban_benar": "Answer",
-        }
+    widgets = {
+        'tipe' : forms.Select({'class' : 'form-select'}, choices=[('1','Essay'),('2','Python')]),
+         'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+        'jawaban_benar' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+    },
+)
 
-        widgets = {
-            'tipe' : forms.Select({'class' : 'form-select'}, choices=[('1','Essay'),('2','Python')]),
-            'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
-            'jawaban_benar' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
-        }
+FormEditQuestSet = modelformset_factory(
+    Pertanyaan,
+    fields= ('tipe', 'instruksi', 'jawaban_benar'),
+    extra=0,
+    labels = {
+    "tipe": "Question Type",
+    "instruksi": "Question", 
+    "jawaban_benar": "Answer",
+    },
+
+    widgets = {
+        'tipe' : forms.Select({'class' : 'form-select'}, choices=[('1','Essay'),('2','Python')]),
+         'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+        'jawaban_benar' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+    },
+)

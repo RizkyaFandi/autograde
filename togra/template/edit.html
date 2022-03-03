@@ -28,7 +28,7 @@
         </div>
         <div class="row">
             <div class="col mb-5">
-                <form id="assignform" method="post" action="/addassign/">
+                <form id="assignform" method="post" action="{% url 'editassign' soal.id %}">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="row">

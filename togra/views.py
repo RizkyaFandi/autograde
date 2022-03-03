@@ -1,8 +1,10 @@
+from cgitb import html
 from cmath import e
 from tkinter import LAST
 from django.forms import formset_factory
-from django.shortcuts import render
-from togra.forms import formAssignment, formQuest
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from togra.forms import *
 from togra.models import *
 from django.forms import modelformset_factory
 
@@ -10,7 +12,8 @@ def landing(request):
     return render(request, 'index.html')
 
 def home(request):
-    return render(request, 'table.html')
+    soals = Soal.objects.all()
+    return render(request, 'table.html', {'soals' : soals,})
 
 def login(request):
     return render(request, 'login.html')
@@ -18,49 +21,50 @@ def login(request):
 def register(request):
     return render(request, 'register.html')
 
-def addAssignment(request):
+def NewAssignment(request):
+    form = formAssignment()
+    formset = FormQuestSet(queryset=Pertanyaan.objects.none())
+    print("aaaaaaaaaaaaaaaaaaaa")
+    konteks = {
+        'form': form,
+        'formset' : formset,
+    }
+    return render(request, 'form.html', konteks)
+
+def AddAssign(request):
+    form = formAssignment(request.POST)
+    formset = FormQuestSet(request.POST)
+    print("bbbbbbbbbbbbbbbb")
+    if form.is_valid() and formset.is_valid():
+        form.save()
+        for f in formset:
+            f.instance.soal_id = Soal.objects.latest('id')
+            f.save()
+            print("cccccccccccccccc")
+    return redirect('/home/')
+
+def EditAssign(request, soal_id):
+    soal = Soal.objects.get(id=soal_id)
     if request.POST:
         form = formAssignment(request.POST)
+        formset = FormEditQuestSet(request.POST)
         print("bbbbbbbbbbbbbbbb")
-        if form.is_valid():
+        if form.is_valid() and formset.is_valid():
             form.save()
-            print("cccccccccccccccc")
-            form = formAssignment()
-
-            konteks = {
-                'form': form,
-            }
-            return render(request, 'table.html', konteks)
-
-        konteks = {
-            'form': form,
-        }
-
-        return render(request, 'form.html', konteks)
+            for f in formset:
+                f.instance.soal_id = Soal.objects.latest('id')
+                f.save()
+                print("cccccccccccccccc")
+        return redirect('/home/')
     else:
-        form = formAssignment()
-        form1 = formQuest()
+        form = formAssignment(instance=soal)
+        formset = FormEditQuestSet(queryset=Pertanyaan.objects.filter(soal_id=soal_id))
         print("aaaaaaaaaaaaaaaaaaaa")
         konteks = {
             'form': form,
-            'form1' : form1,
+            'formset' : formset,
         }
-
         return render(request, 'form.html', konteks)
-
-def AddQuest(request):
-    form1 = modelformset_factory(formQuest)
-    formset = form1()
-    print("bbbbbbbbbbbbbbbb")
-    if formset.is_valid():
-        form1.instance.soal_id = Soal.objects.latest('id')
-        form1.save()
-        print("cccccccccccccccc")
-        form1 = formQuest()
-    konteks = {
-        'form1': form1,
-    }
-    return render(request, 'table.html', konteks)
 
 def assignment(request):
     return render(request, 'assignment.html')

@@ -6,9 +6,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('landing/', landing),
     path('home/', home),
-    path('newassignment/', addAssignment),
+    path('newassignment/', NewAssignment),
     path('login/', login),
     path('register/', register),
     path('assignment/', assignment),
-    path('newquest/', AddQuest),
+    path('addassign/', AddAssign),
+    path('editassign/edit<int:soal_id>', EditAssign, name='edit_assign'),
 ]

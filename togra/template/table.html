@@ -42,114 +42,20 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td>Python: Fungsi Perulangan</td>
-                                    <td>15/01/2022</td>
-                                    <td>34</td>
-                                    <td>
-                                      <button type="button" class="btn btn-primary">
-                                        <span class="btn-label"><i class="fa fa-edit"></i></span></button>
-                                      <button type="button" class="btn btn-danger">
-                                        <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
-                                    </td>
-                                  </tr>
+                                {% for soal in soals %}
+                                <tr>
+                                  <td>{{ forloop.counter }}</td>
+                                  <td><a href="{% url 'edit_assign' soal.id %}">{{ soal.judul }}</a></td>
+                                  <td>{{ soal.tanggal }}</td>
+                                  <td>{{ soal.attempts }}</td>
+                                  <td>
+                                    <button type="button" class="btn btn-primary">
+                                      <span class="btn-label"><i class="fa fa-edit"></i></span></button>
+                                    <button type="button" class="btn btn-danger">
+                                      <span class="btn-label"><i class="fa fa-trash-alt"></i></span></button>
+                                  </td>
+                                </tr>
+                                {% endfor %}
                                 </tbody>
                               </table>
                         </div>
