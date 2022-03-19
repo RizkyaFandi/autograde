@@ -59,3 +59,23 @@ FormEditQuestSet = modelformset_factory(
         'jawaban_benar' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
     },
 )
+
+class formPeserta(ModelForm):
+    class Meta:
+        model = Peserta
+        fields = ("nama_peserta",)
+        labels = {"nama_peserta": "Nama Peserta",}
+        widgets = {'nama_peserta' : forms.TextInput({'class' : 'form-control'}),}
+
+FormJawaban = modelformset_factory(
+    Jawaban,
+    fields= ('jawaban',),
+    extra=1,
+    labels = {
+    "jawaban": "Jawaban",
+    },
+
+    widgets = {
+        'jawaban' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+    },
+)

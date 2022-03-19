@@ -144,6 +144,7 @@
         .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
     }
     function deleteForm(prefix, btn) {
+        console.log(btn)
         var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
         if (total > 1){
             btn.closest('.form-row').remove();

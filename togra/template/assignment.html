@@ -16,15 +16,25 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-6">
-                <h2 class="heading-section">Python : Fungsi Perulangan</h2>
+                <h2 class="heading-section">{{ soal.judul }}</h2>
             </div>
         </div>
-        <div class="row mb-3">
-                <strong class"mb-3">1. Jelaskan apa yang kamu ketahui tentang fungsi perulangan dalam python?</strong>
+        <form id="answer" method="post" action="{% url 'addanswer' soal.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ formset.management_form }}
+            {% for fo in formset %}
+            <div class="row mb-3 form-row">
+                <strong class ="mb-3 pertayaanRow00"></strong>
                 <div class="pt-3 ms-3">
-                    <textarea class="form-control" id="question" rows="3"></textarea>
+                    {{ fo.as_p }}
                 </div>
-        </div>
+            </div>
+            <!-- stores empty form for javascript -->
+            <div id="forms"></div><!-- where the generated forms go -->
+            {% endfor %}
+            <button class="btn btn-primary float-end" id="submitBtn">Submit</button>
+        </form>
     </div>
 </section>
 <!-- Footer-->
@@ -44,4 +54,57 @@
         </div>
     </div>
 </footer>
+
+<script>
+    $(document).ready(function(){
+   
+    var pertanyaan = JSON.parse(`{{ pertanyaanList }}`.replace(/&quot;/g,'"'));
+    for (var i = 0; i < pertanyaan.length; i++) {
+    
+        cloneMore('.form-row:last', 'form');
+        var pertanyaanClass = ".pertanyaanRow" + i
+        console.log(pertanyaanClass)
+        $(pertanyaanClass).html((i+1) + ". " + pertanyaan[i]);
+    }
+    $('.form-row:first').remove();
+    });
+
+
+function updateElementIndex(el, prefix, ndx) {
+        var id_regex = new RegExp('(' + prefix + '-\\d+)');
+        var replacement = prefix + '-' + ndx;
+        if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+        if (el.id) el.id = el.id.replace(id_regex, replacement);
+        if (el.name) el.name = el.name.replace(id_regex, replacement);
+    }
+    function cloneMore(selector, prefix) {
+        var newElement = $(selector).clone(true);
+        var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+            var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        });
+        newElement.find('label').each(function() {
+            var forValue = $(this).attr('for');
+            if (forValue) {
+              forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+              $(this).attr({'for': forValue});
+            }
+        });
+        newElement.find('strong').each(function() {
+            var id = 'mb-3 pertanyaanRow' + (total-1);
+            $(this).attr({'class': id});
+        });
+        total++;
+
+        $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+        $(selector).after(newElement);
+        var conditionRow = $('.form-row:not(:last)');
+        conditionRow.find('.btn.add-form-row')
+        .removeClass('btn-success').addClass('btn-danger')
+        .removeClass('add-form-row').addClass('remove-form-row')
+        .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+    }
+</script>
 {% endblock %}

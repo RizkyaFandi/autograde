@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'togra',
     'bootstrap_datepicker_plus',
     'tempus_dominus',
+    'lti_provider',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,8 @@ STATICFILES_DIRS = [ BASE_DIR, 'static' ]
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTHENTICATION_BACKENDS = [
+  'django.contrib.auth.backends.ModelBackend',
+  'lti_provider.auth.LTIBackend',
+]
