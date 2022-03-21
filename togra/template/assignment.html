@@ -107,4 +107,11 @@ function updateElementIndex(el, prefix, ndx) {
         .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
     }
 </script>
+
+<script>
+    var name_object = $('#id_nama_peserta');
+    var current_name = name_object.val();
+    var new_name = "myname"
+    name_object.attr('value',new_name);
+</script>
 {% endblock %}

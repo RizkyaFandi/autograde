@@ -85,6 +85,14 @@ DATABASES = {
         'PASSWORD': 'master102',
         'HOST': 'localhost',
         'PORT': '3306',
+    },
+    'pgsql': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'autograde',
+        'USER': 'postgres',
+        'PASSWORD': 'master102',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
