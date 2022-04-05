@@ -1,62 +1,98 @@
 from dataclasses import field, fields
+from fileinput import FileInput
 from django import forms
-from django.forms import ModelForm, modelformset_factory
+from django.forms import ModelForm, TextInput, modelformset_factory
 from togra.models import *
-from tempus_dominus.widgets import DateTimePicker
+from tempus_dominus.widgets import TimePicker
 
 class formAssignment(ModelForm):
     class Meta:
         model = Soal
-        fields = ("judul", "tanggal")
+        fields = ("judul",'tipe', 'timer')
 
         labels = {
         "judul": "Title",
-        "tanggal": "Deadline",
+        "tipe": "Assignment Type",
+        "timer": "Duration"
     }
         widgets = {
             'judul' : forms.TextInput({'class' : 'form-control form-control-lg'}),
-            'tanggal' : DateTimePicker(options={
-                'useCurrent': True,
+            'tipe' : forms.Select({'class' : 'form-select', 'onchange' : 'myfunc()'}, choices=[('1','Essay'),('2','Python')]),
+            'timer' : TimePicker(options={
+                'defaultDate': '1970-01-01T00:00:00',
                 'collapse': False,
             },attrs={
-                'append': 'fa fa-calendar',
+                'append': 'far fa-clock',
                 'size': 'small',
                 'icon_toggle': True,
             }),
         }
 
+class formEditAssignment(ModelForm):
+    class Meta:
+        model = Soal
+        fields = ("judul",'timer')
+
+        labels = {
+        "judul": "Title",
+        "timer": "Duration"
+    }
+        widgets = {
+            'judul' : forms.TextInput({'class' : 'form-control form-control-lg'}),
+            'timer' : TimePicker(options={
+                'useCurrent': False,
+                'collapse': False,
+            },attrs={
+                'append': 'far fa-clock',
+                'size': 'small',
+                'icon_toggle': True,
+            },
+            ),
+        }
 
 FormQuestSet = modelformset_factory(
     Pertanyaan,
-    fields= ('tipe', 'instruksi', 'jawaban_benar'),
+    fields= ('instruksi', 'jawaban_benar', 'pyfile'),
     extra=1,
     labels = {
-    "tipe": "Question Type",
+    "instruksi": "Question", 
+    "jawaban_benar": "Answer",
+    "pyfile" : "Python File (.py)"
+    },
+
+    widgets = {
+        'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+        'jawaban_benar' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+        'pyfile' : forms.FileInput(attrs={'class' : 'form-control', 'type': 'file'})
+    },
+)
+
+FormEditQuestEsSet = modelformset_factory(
+    Pertanyaan,
+    fields= ('instruksi', 'jawaban_benar'),
+    extra=0,
+    labels = {
     "instruksi": "Question", 
     "jawaban_benar": "Answer",
     },
 
     widgets = {
-        'tipe' : forms.Select({'class' : 'form-select'}, choices=[('1','Essay'),('2','Python')]),
-         'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+        'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
         'jawaban_benar' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
     },
 )
 
-FormEditQuestSet = modelformset_factory(
+FormEditQuestPySet = modelformset_factory(
     Pertanyaan,
-    fields= ('tipe', 'instruksi', 'jawaban_benar'),
+    fields= ('instruksi','pyfile'),
     extra=0,
     labels = {
-    "tipe": "Question Type",
     "instruksi": "Question", 
-    "jawaban_benar": "Answer",
     },
 
     widgets = {
-        'tipe' : forms.Select({'class' : 'form-select'}, choices=[('1','Essay'),('2','Python')]),
-         'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
-        'jawaban_benar' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+        'instruksi' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+        'pyfile' : forms.FileInput(attrs={'class' : 'form-control', 'type': 'file'})
     },
 )
 
@@ -65,9 +101,10 @@ class formPeserta(ModelForm):
         model = Peserta
         fields = ("nama_peserta",)
         labels = {"nama_peserta": "Nama Peserta",}
-        widgets = {'nama_peserta' : forms.TextInput({'class' : 'form-control'}),}
+        widgets = {'nama_peserta' : forms.TextInput({'class' : 'form-control'}),
+        }
 
-FormJawaban = modelformset_factory(
+FormJawabanEs = modelformset_factory(
     Jawaban,
     fields= ('jawaban',),
     extra=1,
@@ -77,5 +114,18 @@ FormJawaban = modelformset_factory(
 
     widgets = {
         'jawaban' : forms.Textarea(attrs={'class' : 'form-control', 'rows': '3'}),
+    },
+)
+
+FormJawabanPy = modelformset_factory(
+    Jawaban,
+    fields= ('pyfile',),
+    extra=1,
+    labels = {
+    "pyfile": "Python File (.py)",
+    },
+
+    widgets = {
+        'pyfile' : forms.FileInput(attrs={'class' : 'form-control', 'type': 'file'}),
     },
 )

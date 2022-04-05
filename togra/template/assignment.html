@@ -6,10 +6,19 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="altNav">
     <div class="container">
         <a class="navbar-brand" href="#page-top"><img src="{% static 'assets/img/TOGRA.svg' %}" alt="..." /></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars ms-1"></i>
         </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
+            <h3 id="days" style="color: white;"></h3>
+            <h3 id="hours" style="color: white;"></h3>
+            <h3 id="mins" style="color: white;"></h3>
+            <h3 id="secs" style="color: white;"></h3>
+            <h3 id="end" style="color: white;"></h3>
+            <div id="durat" style="visibility: hidden;">#</div>
+        </div>
     </div>
 </nav>
 <section class="ftco-section">
@@ -19,13 +28,13 @@
                 <h2 class="heading-section">{{ soal.judul }}</h2>
             </div>
         </div>
-        <form id="answer" method="post" action="{% url 'addanswer' soal.id %}">
+        <form id="answer" method="post" action="" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             {{ formset.management_form }}
             {% for fo in formset %}
             <div class="row mb-3 form-row">
-                <strong class ="mb-3 pertayaanRow00"></strong>
+                <strong class="mb-3 pertanyaanRow00"></strong>
                 <div class="pt-3 ms-3">
                     {{ fo.as_p }}
                 </div>
@@ -56,21 +65,21 @@
 </footer>
 
 <script>
-    $(document).ready(function(){
-   
-    var pertanyaan = JSON.parse(`{{ pertanyaanList }}`.replace(/&quot;/g,'"'));
-    for (var i = 0; i < pertanyaan.length; i++) {
-    
-        cloneMore('.form-row:last', 'form');
-        var pertanyaanClass = ".pertanyaanRow" + i
-        console.log(pertanyaanClass)
-        $(pertanyaanClass).html((i+1) + ". " + pertanyaan[i]);
-    }
-    $('.form-row:first').remove();
+    $(document).ready(function () {
+
+        var pertanyaan = JSON.parse(`{{ pertanyaanList }}`.replace(/&quot;/g, '"'));
+        for (var i = 0; i < pertanyaan.length; i++) {
+
+            cloneMore('.form-row:last', 'form');
+            var pertanyaanClass = ".pertanyaanRow" + i
+            console.log(pertanyaanClass)
+            $(pertanyaanClass).html((i + 1) + ". " + pertanyaan[i]);
+        }
+        $('.form-row:first').remove();
     });
 
 
-function updateElementIndex(el, prefix, ndx) {
+    function updateElementIndex(el, prefix, ndx) {
         var id_regex = new RegExp('(' + prefix + '-\\d+)');
         var replacement = prefix + '-' + ndx;
         if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
@@ -80,21 +89,21 @@ function updateElementIndex(el, prefix, ndx) {
     function cloneMore(selector, prefix) {
         var newElement = $(selector).clone(true);
         var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
-            var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function () {
+            var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
             var id = 'id_' + name;
-            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            $(this).attr({ 'name': name, 'id': id }).val('').removeAttr('checked');
         });
-        newElement.find('label').each(function() {
+        newElement.find('label').each(function () {
             var forValue = $(this).attr('for');
             if (forValue) {
-              forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
-              $(this).attr({'for': forValue});
+                forValue = forValue.replace('-' + (total - 1) + '-', '-' + total + '-');
+                $(this).attr({ 'for': forValue });
             }
         });
-        newElement.find('strong').each(function() {
-            var id = 'mb-3 pertanyaanRow' + (total-1);
-            $(this).attr({'class': id});
+        newElement.find('strong').each(function () {
+            var id = 'mb-3 pertanyaanRow' + (total - 1);
+            $(this).attr({ 'class': id });
         });
         total++;
 
@@ -102,16 +111,65 @@ function updateElementIndex(el, prefix, ndx) {
         $(selector).after(newElement);
         var conditionRow = $('.form-row:not(:last)');
         conditionRow.find('.btn.add-form-row')
-        .removeClass('btn-success').addClass('btn-danger')
-        .removeClass('add-form-row').addClass('remove-form-row')
-        .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+            .removeClass('btn-success').addClass('btn-danger')
+            .removeClass('add-form-row').addClass('remove-form-row')
+            .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
     }
 </script>
 
 <script>
     var name_object = $('#id_nama_peserta');
     var current_name = name_object.val();
-    var new_name = "myname"
-    name_object.attr('value',new_name);
+    var new_name = `{{ request.user.username }}`
+    name_object.attr('value', new_name);
+</script>
+
+<script src="{% static 'js/autosave.js' %}"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+
+<script>
+    // The data/time we want to countdown to
+    var now = new Date().getTime();
+    console.log(now)
+    console.log(`{{ timer }}`)
+    if (`{{ timer }}` != "0") {
+        var duration = parseInt(`{{ timer }}`)
+        var countDown = now + duration
+        console.log(countDown)
+
+        // Run myfunc every second
+        var myfunc = setInterval(function () {
+
+            var now = new Date().getTime();
+            var durleft = localStorage.getItem("time")
+            console.log(durleft)
+            if (durleft == 'undefined') {
+                var timeleft = countDown - now;
+                durleft = timeleft
+            }
+            else {
+                var timeleft = parseInt(durleft) - 1000
+            }
+            localStorage.setItem("time", timeleft)
+
+            // Calculating the days, hours, minutes and seconds left
+
+            var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+            // Result is output to the specific element
+            document.getElementById("hours").innerHTML = hours + "&nbsp:&nbsp"
+            document.getElementById("mins").innerHTML = minutes + "&nbsp:&nbsp"
+            document.getElementById("secs").innerHTML = seconds
+
+            // Display the message when countdown is over
+            if (timeleft < 0) {
+                clearInterval(myfunc);
+                $("#answer").submit()
+            }
+        }, 1000);
+
+    }
 </script>
 {% endblock %}

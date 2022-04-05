@@ -2,6 +2,19 @@
 {% load static %}
 
 {% block content %}
+<script>
+    function myfunc() {
+        if ($('#id_tipe').val() == '1') {
+            $('#es').css('display', 'block')
+            $('#py').css('display', 'none')
+        }
+        else {
+            $('#es').css('display', 'none')
+            $('#py').css('display', 'block')
+        }
+    }
+</script>
+
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="altNav">
     <div class="container">
@@ -23,36 +36,51 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-6">
-                <h2 class="heading-section">New Assignment</h2>
+                <h2 class="heading-section">Edit Assignment</h2>
             </div>
         </div>
         <div class="row">
             <div class="col mb-5">
-                <form id="assignform" method="post" action="{% url 'editassign' soal.id %}">
+                <form id="assignform" method="post" action="/addassign/" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form.as_p }}
                     <div class="row">
                         <div class="col mb-5">
                             <div class="card shadow-sm">
                                 <div class="card-body p-5">
-                                        <div class="col mb-3">
-                                                {{ formset.management_form }}
-                                                {% for fo in formset %}
-                                                <div class="row form-row mt-5" id="form_template">
-                                                    <div class="col">
-                                                        <h4>Question 1</h4>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="float-end">
-                                                            <button class="btn btn-danger remove-form-row" type="button">Delete</button>
-                                                        </div>
-                                                    </div>
-                                                        {{fo.as_p}}
+                                    <div class="col mb-3">
+                                        {{ formset.management_form }}
+                                        {% for fo in formset %}
+                                        <div class="row form-row mt-5" id="form_template">
+                                            <div class="col" id="questnum">
+                                                <h4 class="num">Question 1</h4>
+                                            </div>
+                                            <div class="col">
+                                                <div class="float-end">
+                                                    <button class="btn btn-danger remove-form-row"
+                                                        type="button">Delete</button>
                                                 </div>
-                                                <!-- stores empty form for javascript -->
-                                                <div id="forms"></div><!-- where the generated forms go -->
-                                                {% endfor %}
+                                            </div>
+                                            <div class="fieldWrapper my-2">
+                                                {{ fo.instruksi.errors }}
+                                                <label for="{{ fo.message.id_for_label }}">Question:</label>
+                                                {{ fo.instruksi }}
+                                            </div>
+                                            <div class="fieldWrapper my-2" id="es">
+                                                {{ fo.jawaban_benar.errors }}
+                                                <label for="{{ fo.message.id_for_label }}">Answer:</label>
+                                                {{ fo.jawaban_benar }}
+                                            </div>
+                                            <div class="fieldWrapper my-2" id="py">
+                                                {{ fo.pyfile.errors }}
+                                                <label for="{{ fo.message.id_for_label }}">Python File:</label>
+                                                {{ fo.pyfile }}
+                                            </div>
                                         </div>
+                                        <!-- stores empty form for javascript -->
+                                        <div id="forms"></div><!-- where the generated forms go -->
+                                        {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                             <div class="d-grid gap-3 d-md-block my-3 float-end">
@@ -64,7 +92,7 @@
                 </form>
             </div>
         </div>
-        
+
     </div>
 </section>
 <!-- Footer-->
@@ -86,28 +114,34 @@
 </footer>
 <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
 <script type="text/javascript">
-    $('#submitBtn').click(function () {
-        console.log("aaaaaaaaaaaaaaaaa")
+    $(document).ready(function () {
 
-        $('#assignform').submit();
+        var pertanyaan = JSON.parse(`{{ pertanyaanList }}`.replace(/&quot;/g, '"'));
+        for (var i = 0; i < pertanyaan.length; i++) {
 
+            cloneMore('.form-row:last', 'form');
+            var pertanyaanClass = ".pertanyaanRow" + i
+            console.log(pertanyaanClass)
+            $(pertanyaanClass).html((i + 1) + ". " + pertanyaan[i]);
+        }
+        $('.form-row:first').remove();
     });
 </script>
 
 <script type="text/javascript">
     var count = 2
-    $('#addquest').click(function () {
-        // update total form count
-        console.log("aaaaaaaaaaaaaaa")
-        // copy the template and replace prefixes with the correct index
-        // Note: Must use global replace here
-        // var div = document.getElementById('questnum');
-        // div.innerHTML = 'Question 2';
-        console.log("bbbbbbbbbbbbbb")
-        html = $('#form_template').clone().html().replace('/__prefix_/g', 1);
-        $('#forms').append(html);
-        count++
-    })
+    // $('#addquest').click(function () {
+    //     // update total form count
+    //     console.log("aaaaaaaaaaaaaaa")
+    //     // copy the template and replace prefixes with the correct index
+    //     // Note: Must use global replace here
+    //     var div = document.getElementById('questnum');
+    //     div.innerHTML = 'Question ' + count;
+    //     console.log("bbbbbbbbbbbbbb")
+    //     html = $('#form_template').clone().html().replace('/__prefix_/g', 1);
+    //     $('#forms').append(html);
+    //     count++
+    // })
 </script>
 
 <script type='text/javascript'>
@@ -121,17 +155,21 @@
     function cloneMore(selector, prefix) {
         var newElement = $(selector).clone(true);
         var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
-        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
-            var name = $(this).attr('name').replace('-' + (total-1) + '-', '-' + total + '-');
+        newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function () {
+            var name = $(this).attr('name').replace('-' + (total - 1) + '-', '-' + total + '-');
             var id = 'id_' + name;
-            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+            $(this).attr({ 'name': name, 'id': id }).val('').removeAttr('checked');
         });
-        newElement.find('label').each(function() {
+        newElement.find('label').each(function () {
             var forValue = $(this).attr('for');
             if (forValue) {
-              forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
-              $(this).attr({'for': forValue});
+                forValue = forValue.replace('-' + (total - 1) + '-', '-' + total + '-');
+                $(this).attr({ 'for': forValue });
             }
+        });
+        newElement.find('h4').each(function () {
+            var id = 'num' + (total);
+            $(this).attr({ 'class': id });
         });
         total++;
 
@@ -139,30 +177,34 @@
         $(selector).after(newElement);
         var conditionRow = $('.form-row:not(:last)');
         conditionRow.find('.btn.add-form-row')
-        .removeClass('btn-success').addClass('btn-danger')
-        .removeClass('add-form-row').addClass('remove-form-row')
-        .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+            .removeClass('btn-success').addClass('btn-danger')
+            .removeClass('add-form-row').addClass('remove-form-row')
+            .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
+         var pertanyaanClass = ".num" + (total-1)
+         console.log(pertanyaanClass)
+        $(pertanyaanClass).html("Question " + (total));
     }
     function deleteForm(prefix, btn) {
+        console.log(btn)
         var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-        if (total > 1){
+        if (total > 1) {
             btn.closest('.form-row').remove();
             var forms = $('.form-row');
             $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
-            for (var i=0, formCount=forms.length; i<formCount; i++) {
-                $(forms.get(i)).find(':input').each(function() {
+            for (var i = 0, formCount = forms.length; i < formCount; i++) {
+                $(forms.get(i)).find(':input').each(function () {
                     updateElementIndex(this, prefix, i);
                 });
             }
         }
         return false;
     }
-    $(document).on('click', '.add-form-row', function(e){
+    $(document).on('click', '.add-form-row', function (e) {
         e.preventDefault();
         cloneMore('.form-row:last', 'form');
         return false;
     });
-    $(document).on('click', '.remove-form-row', function(e){
+    $(document).on('click', '.remove-form-row', function (e) {
         e.preventDefault();
         deleteForm('form', $(this));
         return false;

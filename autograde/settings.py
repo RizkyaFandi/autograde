@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!4=l3%s9(b1)*jb*u_x8^*c0he-^z92tl(1b@i-@1mlc1!7yjl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 'localhost','127.0.0.1', '1c71-182-2-71-48.ngrok.io']
 
 
 # Application definition
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
 ]
 
 ROOT_URLCONF = 'autograde.urls'
@@ -64,6 +65,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -79,14 +81,6 @@ WSGI_APPLICATION = 'autograde.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'autograde',
-        'USER': 'root',
-        'PASSWORD': 'master102',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    },
-    'pgsql': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'autograde',
         'USER': 'postgres',
@@ -146,3 +140,44 @@ AUTHENTICATION_BACKENDS = [
   'django.contrib.auth.backends.ModelBackend',
   'lti_provider.auth.LTIBackend',
 ]
+
+PYLTI_CONFIG = {
+    'consumers': {
+        'rtey23': {
+            'secret': 'dhabty3'
+        }
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+SESSION_COOKIE_SAMESITE = None
+
+SESSION_COOKIE_SECURE = True
+
+SESSION_COOKIE_HTTPONLY = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
+
+LTI_TOOL_CONFIGURATION = {
+    'title': 'Sample LTI Tool',
+    'description': 'This tool includes launch, navigation and assignments',
+    'launch_url': 'lti/',
+    'embed_url': '',  # @todo - add an editor embed example
+    'embed_icon_url': '',
+    'embed_tool_id': '',
+    'landing_url': '/',
+    'navigation': True,
+    'new_tab': True,
+    'course_aware': False,
+    'frame_width': 1024,
+    'frame_height': 1024,
+    'assignments': {
+        '1': '/assignment/1/',
+        '2': '/assignment/2/',
+    }
+}
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'

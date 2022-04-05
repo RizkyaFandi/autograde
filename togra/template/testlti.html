@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div>
+    {% if request.user.username %}
+    <form action="{% url 'lti-post-grade' %}" method="post" id="sendlti">
+        {% csrf_token %}
+        <input type="hidden" name="score" value="{{ sgrade }}" />
+        <input type="hidden" name="next" value="{% url 'grade' soal.id %}" />
+    </form>
+    {% else %}
+    <form action="{% url 'grade' soal.id %}" method="post" id="sendlocal">
+        {% csrf_token %}
+    </form>
+    {% endif %}
+</div>
+
+<script>
+    $("#sendlti").submit()
+    $("#sendlocal").submit()
+</script>
+{% endblock %}

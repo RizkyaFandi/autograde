@@ -6,34 +6,20 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="altNav">
     <div class="container">
         <a class="navbar-brand" href="#page-top"><img src="{% static 'assets/img/TOGRA.svg' %}" alt="..." /></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars ms-1"></i>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-            <div class="d-grid gap-3 d-md-block">
-                <button class="btn btn-primary" type="button">Login</button>
-                <button class="btn btn-outline-primary" type="button">Sign Up</button>
-            </div>
-        </div>
     </div>
 </nav>
 <section class="ftco-section">
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-6">
-                <h2 class="heading-section">{{ soal.judul }}</h2>
-            </div>
-            <div class="text-center my-5">
-                <h4>Your Grade</h4>
-                <strong style="font-size: 80px; color: orange;">{{ sgrade }}</strong>
-            </div>
-            <div class="col">
-                <strong>Feedback:</strong>
-                <p>Your answer has a 70% similarity with your teacher's answer. Maybe your answer is not detailed enough.</p>
+                <h2 class="heading-section">{{ peserta.name }}</h2>
             </div>
         </div>
+        
     </div>
 </section>
 <!-- Footer-->
