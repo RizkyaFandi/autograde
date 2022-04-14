@@ -1,13 +1,6 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-
-class Akun(models.Model):
-    nama = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50)
-    password = models.CharField(max_length=12)
-
-    def __str__(self):
-        return self.username
+from django.forms import CharField
 
 class Soal(models.Model):
     judul = models.CharField(max_length=100)
@@ -15,7 +8,7 @@ class Soal(models.Model):
     tipe = models.CharField(max_length=10,null=True)
     link_soal = models.URLField(max_length=200,null=True)
     attempts = models.IntegerField(null=True)
-    akun_id = models.ForeignKey(Akun, on_delete=models.CASCADE, null=True)
+    user = models.TextField(null=True)
 
     def __str__(self):
         return self.judul

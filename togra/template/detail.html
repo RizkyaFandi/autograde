@@ -11,6 +11,10 @@
             Menu
             <i class="fas fa-bars ms-1"></i>
         </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
+            <h2 style="color: white;">{{ user }}</h2>
+            <a href="/logout/" type="button" class="btn btn-primary btn-sm ms-2">Logout</a>
+        </div>
     </div>
 </nav>
 <section class="ftco-section">
@@ -21,7 +25,7 @@
             </div>
         </div>
         <div class="row">
-            <h4>Questions</h4>
+            <h4 class="heading-section">Questions</h4>
             {% for pertanyaan in pertanyaans %}
             <div class="row mt-2 ms-3">
                 <div class="col">
@@ -34,6 +38,8 @@
                 </div>
             </div>
             {% endfor %}
+            <p><strong>Duration : </strong>{{ timer }}</p>
+            <p><strong>Link : </strong><a href="{{ soal.link_soal }}">{{ soal.link_soal }}</a></p>
         </div>
         <div class="row mt-5">
             <h4 class="heading-section">How to integrate with Moodle</h4>
@@ -60,7 +66,7 @@
                                 <td>{{ peserta.attemptdate }}</td>
                                 <td>{{ peserta.nilai }}</td>
                                 <td>
-                                    <a type="button" class="btn btn-info" href="{% url 'assignment' soal.id %}">
+                                    <a type="button" class="btn btn-info" href="{% url 'answer' soal.id peserta.id %}">
                                         <span class="btn-label"><i class="fa fa-eye"></i></span></a>
                                 </td>
                             </tr>

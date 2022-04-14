@@ -28,14 +28,14 @@
                 <h2 class="heading-section">{{ soal.judul }}</h2>
             </div>
         </div>
-        <form id="answer" method="post" action="" enctype="multipart/form-data">
+        <form id="answer" method="post" action="{% url 'addanswer' soal.id %}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             {{ formset.management_form }}
             {% for fo in formset %}
             <div class="row mb-3 form-row">
                 <strong class="mb-3 pertanyaanRow00"></strong>
-                <div class="pt-3 ms-3">
+                <div class="pt-3 mx-3">
                     {{ fo.as_p }}
                 </div>
             </div>
@@ -120,7 +120,7 @@
 <script>
     var name_object = $('#id_nama_peserta');
     var current_name = name_object.val();
-    var new_name = `{{ request.user.username }}`
+    var new_name = `{{ request.user.first_name}}` + " " + `{{ request.user.last_name}}`
     name_object.attr('value', new_name);
 </script>
 

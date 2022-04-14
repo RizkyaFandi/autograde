@@ -3,14 +3,14 @@
 
 {% block content %}
 <div>
-    {% if request.user.username %}
+    {% if request.user.last_name %}
     <form action="{% url 'lti-post-grade' %}" method="post" id="sendlti">
         {% csrf_token %}
         <input type="hidden" name="score" value="{{ sgrade }}" />
-        <input type="hidden" name="next" value="{% url 'grade' soal.id %}" />
+        <input type="hidden" name="next" value="{% url 'grade' soal.id peserta.id %}" />
     </form>
     {% else %}
-    <form action="{% url 'grade' soal.id %}" method="post" id="sendlocal">
+    <form action="{% url 'grade' soal.id peserta.id %}" method="post" id="sendlocal">
         {% csrf_token %}
     </form>
     {% endif %}

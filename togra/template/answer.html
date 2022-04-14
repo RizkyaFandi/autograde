@@ -16,10 +16,33 @@
     <div class="container">
         <div class="row mb-5">
             <div class="col-md-6">
-                <h2 class="heading-section">{{ peserta.name }}</h2>
+                <h2 class="heading-section"">{{ peserta.nama_peserta }}</h2>
+                <p>Grade : <strong>{{ peserta.nilai }}</strong></p>
             </div>
-        </div>
-        
+            <div class="row">
+                {% for j in jawaban %}
+                <div class="row mt-2 ms-3">
+                    <div class="col">
+                        <strong>{{ forloop.counter }}. {{ j.pertanyaan_id }}</strong>
+                    </div>
+                </div>
+                <div class="row mb-3 ms-5">
+                    <div class="col">
+                        {% if j.jawaban %}
+                        {{ j }}
+                        {% else %}
+                        <a href="http://127.0.0.1:8000/media/{{ j.pyfile }}">View Code</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row mb-3 ms-5">
+                    <div class="col">
+                        Feedback : <br>{{ j.pembahasan }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>      
     </div>
 </section>
 <!-- Footer-->

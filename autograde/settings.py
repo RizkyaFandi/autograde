@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bootstrap_datepicker_plus',
     'tempus_dominus',
     'lti_provider',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -173,11 +174,63 @@ LTI_TOOL_CONFIGURATION = {
     'frame_width': 1024,
     'frame_height': 1024,
     'assignments': {
-        '1': '/assignment/1/',
-        '2': '/assignment/2/',
+        '1' : '/assignment/1/',
+        '2' : '/assignment/2/',
+        '3' : '/assignment/3/',
+        '4' : '/assignment/4/',
+        '5' : '/assignment/5/',
+        '6' : '/assignment/6/',
+        '7' : '/assignment/7/',
+        '8' : '/assignment/8/',
+        '9' : '/assignment/9/',
+        '10' : '/assignment/10/',
+        '11' : '/assignment/11/',
+        '12' : '/assignment/12/',
+        '13' : '/assignment/13/',
+        '14' : '/assignment/14/',
+        '15' : '/assignment/15/',
+        '16' : '/assignment/16/',
+        '17' : '/assignment/17/',
+        '18' : '/assignment/18/',
+        '19' : '/assignment/19/',
+        '20' : '/assignment/20/',
+        '21' : '/assignment/21/',
+        '22' : '/assignment/22/',
+        '23' : '/assignment/23/',
+        '24' : '/assignment/24/',
+        '25' : '/assignment/25/',
+        '26' : '/assignment/26/',
+        '27' : '/assignment/27/',
+        '28' : '/assignment/28/',
+        '29' : '/assignment/29/',
+        '30' : '/assignment/30/',
+        '31' : '/assignment/31/',
+        '32' : '/assignment/32/',
+        '33' : '/assignment/33/',
+        '34' : '/assignment/34/',
+        '35' : '/assignment/35/',
+        '36' : '/assignment/36/',
+        '37' : '/assignment/37/',
+        '38' : '/assignment/38/',
+        '39' : '/assignment/39/',
+        '40' : '/assignment/40/',
+        '41' : '/assignment/41/',
+        '42' : '/assignment/42/',
+        '43' : '/assignment/43/',
+        '44' : '/assignment/44/',
+        '45' : '/assignment/45/',
+        '46' : '/assignment/46/',
+        '47' : '/assignment/47/',
+        '48' : '/assignment/48/',
+        '49' : '/assignment/49/',
+        '50' : '/assignment/50/',
     }
 }
 
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGIN_URL = 'login'

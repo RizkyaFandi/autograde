@@ -12,10 +12,8 @@
             <i class="fas fa-bars ms-1"></i>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-            <div class="d-grid gap-3 d-md-block">
-                <button class="btn btn-primary" type="button">Login</button>
-                <button class="btn btn-outline-primary" type="button">Sign Up</button>
-            </div>
+                <h2 style="color: white;">{{ user }}</h2>
+                <a href="/logout/" type="button" class="btn btn-primary btn-sm ms-2">Logout</a>
         </div>
     </div>
 </nav>
@@ -30,11 +28,13 @@
             </div>
             {% endif %}
             {% endfor %}
-            <div class="col-md-6 mb-5">
-                <h2 class="heading-section">Assignment List</h2>
-            </div>
-            <div class="col-md-6 mb-5">
-                <a type="button" class="btn btn-primary float-end" href="/newassignment/">Add Assignment</a>
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h2 class="heading-section">Assignment List</h2>
+                </div>
+                <div class="col-md-6">
+                    <a type="button" class="btn btn-primary float-end" href="/newassignment/">Add Assignment</a>
+                </div>
             </div>
         </div>
         <div class="row">

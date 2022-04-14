@@ -25,10 +25,8 @@
             <i class="fas fa-bars ms-1"></i>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-            <div class="d-grid gap-3 d-md-block">
-                <button class="btn btn-primary" type="button">Login</button>
-                <button class="btn btn-outline-primary" type="button">Register</button>
-            </div>
+            <h2 style="color: white;">{{ user }}</h2>
+            <a href="/logout/" type="button" class="btn btn-primary btn-sm ms-2">Logout</a>
         </div>
     </div>
 </nav>
@@ -180,8 +178,8 @@
             .removeClass('btn-success').addClass('btn-danger')
             .removeClass('add-form-row').addClass('remove-form-row')
             .html('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>');
-         var pertanyaanClass = ".num" + (total-1)
-         console.log(pertanyaanClass)
+        var pertanyaanClass = ".num" + (total - 1)
+        console.log(pertanyaanClass)
         $(pertanyaanClass).html("Question " + (total));
     }
     function deleteForm(prefix, btn) {

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container h-100">
+	<div class="row justify-content-sm-center h-100">
+		<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+			<div class="text-center my-5">
+				<img src="{% static 'assets/img/TOGRA.svg' %}" alt="logo" width="200">
+			</div>
+			<div class="card shadow-lg">
+				<div class="card-body p-5">
+					<h1 class="fs-4 card-title fw-bold mb-4">Login</h1>
+					<form method="POST">
+						{% csrf_token %}
+						<div class="mb-2">
+							{{ form.username|add_label_class:"label_class_1" }}
+							{{ form.username|add_class:'form-control' }}
+						</div>
+						<div class="my-3">
+							{{ form.password|add_label_class:"label_class_1" }}
+							{{ form.password|add_class:'form-control' }}
+						</div>
+						<button type="submit" class="btn btn-primary ms-auto">
+							Login
+						</button>
+					</form>
+				</div>
+				<div class="card-footer py-3 border-0">
+					<div class="text-center">
+						Don't have an account? <a href="/register/" class="text-dark">Create One</a>
+					</div>
+				</div>
+			</div>
+			<div class="text-center mt-5 text-muted">
+				Copyright &copy; 2017-2021 &mdash; Your Company
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+<script src="js/login.js"></script>
