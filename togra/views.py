@@ -1,10 +1,7 @@
 from asyncio.windows_events import NULL
 from cgitb import html
-from cmath import e
-from tkinter import LAST
 from unicodedata import name
 from django.forms import formset_factory
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from autograde.settings import LOGIN_URL
 from togra.forms import *
@@ -15,7 +12,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
@@ -32,6 +28,7 @@ def home(request):
         if soal.timer == "00:00:00":
             soal.timer = "None"
     return render(request, 'table.html', {'soals': soals, })
+
 
 def register(request):
     if request.POST:
@@ -76,9 +73,9 @@ def AddAssign(request):
         form.save()
         for f in formset:
             f.instance.soal_id = Soal.objects.latest('id')
-            if form.instance.tipe == "1" and f.instance.pyfile != "No Data":
+            if form.instance.tipe == "1":
                 f.instance.pyfile = "No Data"
-            if form.instance.tipe == "2" and f.instance.jawaban_benar != "":
+            else:
                 f.instance.jawaban_benar = ""
             f.save()
             print("cccccccccccccccc")
@@ -88,35 +85,34 @@ def AddAssign(request):
 @login_required(login_url=LOGIN_URL)
 def EditAssign(request, soal_id):
     soal = Soal.objects.get(id=soal_id)
-    if request.POST:
-        form = formEditAssignment(request.POST)
-        formset = FormEditQuestEsSet(request.POST, request.FILES)
-        print("bbbbbbbbbbbbbbbb")
-        if form.is_valid() and formset.is_valid():
-            form.save()
-            for f in formset:
-                f.instance.soal_id = Soal.objects.latest('id')
-                if form.instance.tipe == "1" and f.instance.pyfile != "No Data":
-                    f.instance.pyfile = "No Data"
-                if form.instance.tipe == "2" and f.instance.jawaban_benar != "":
-                    f.instance.jawaban_benar = ""
-                f.save()
-                print("cccccccccccccccc")
-        return redirect('/home/')
+    form = formEditAssignment(instance=soal)
+    if soal.tipe == "1":
+        formset = FormEditQuestEsSet(instance=soal)
     else:
-        form = formEditAssignment(instance=soal)
-        if soal.tipe == "1":
-            formset = FormEditQuestEsSet(
-                queryset=Pertanyaan.objects.filter(soal_id=soal_id))
-        else:
-            formset = FormEditQuestPySet(
-                queryset=Pertanyaan.objects.filter(soal_id=soal_id))
-        print("aaaaaaaaaaaaaaaaaaaa")
-        konteks = {
-            'form': form,
-            'formset': formset,
-        }
-        return render(request, 'edit.html', konteks)
+        formset = FormEditQuestPySet(instance=soal)
+    print("aaaaaaaaaaaaaaaaaaaa")
+    konteks = {
+        'form': form,
+        'formset': formset,
+        'soal': soal,
+    }
+    return render(request, 'edit.html', konteks)
+
+
+@login_required(login_url=LOGIN_URL)
+def AddEdit(request, soal_id):
+    soal = Soal.objects.get(id=soal_id)
+    form = formEditAssignment(request.POST, instance=soal)
+    if soal.tipe == "1":
+        formset = FormEditQuestEsSet(request.POST, instance=soal)
+    else:
+        formset = FormEditQuestPySet(
+            request.POST, request.FILES, instance=soal)
+    if form.is_valid() and formset.is_valid():
+        print('asasas')
+        form.save()
+        formset.save()
+        return redirect('/home/')
 
 
 def assignment(request, soal_id):
@@ -217,11 +213,15 @@ def detailQuest(request, soal_id):
     soal = Soal.objects.get(id=soal_id)
     pertanyaans = Pertanyaan.objects.filter(soal_id_id=soal_id)
     timer = str(soal.timer)
+    pyt = False
+    if soal.tipe == '2':
+        pyt = True
     konteks = {
         'pesertas': pesertas,
         'soal': soal,
         'pertanyaans': pertanyaans,
         'timer': timer,
+        'python': pyt,
     }
     return render(request, 'detail.html', konteks)
 

@@ -12,8 +12,14 @@
             <i class="fas fa-bars ms-1"></i>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-            <h2 style="color: white;">{{ user }}</h2>
-            <a href="/logout/" type="button" class="btn btn-primary btn-sm ms-2">Logout</a>
+            <div class="row d-flex align-items-center">
+                <div class="col mt-2">
+                    <h4 style="color: white;">{{ user }}</h4>
+                </div>
+                <div class="col">
+                    <a href="/logout/" type="button" class="btn btn-primary btn-sm">Logout</a>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -25,7 +31,7 @@
             </div>
         </div>
         <div class="row">
-            <h4 class="heading-section">Questions</h4>
+            <h4 class="heading-section" style="color: gray;">Assignment Detail</h4>
             {% for pertanyaan in pertanyaans %}
             <div class="row mt-2 ms-3">
                 <div class="col">
@@ -35,6 +41,9 @@
             <div class="row mb-3 ms-5">
                 <div class="col">
                     {{ pertanyaan.jawaban_benar }}
+                    {% if python %}
+                    <a href="http://127.0.0.1:8000/media/{{ pertanyaan.pyfile }}">View Code</a>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -42,12 +51,31 @@
             <p><strong>Link : </strong><a href="{{ soal.link_soal }}">{{ soal.link_soal }}</a></p>
         </div>
         <div class="row mt-5">
-            <h4 class="heading-section">How to integrate with Moodle</h4>
+            <h4 class="heading-section" style="color: gray;">How to integrate with Moodle</h4>
+            <div class="row mt-2 ms-1">
+                <div class="col">
+                    <ol>
+                        <li> Login to your Moodle Account</li>
+                        <li> Go to your course and click <strong>Turn on editing</strong></li>
+                        <li> Click <strong>Add an activity or resource</strong> and select <strong>External tool</strong></li>
+                        <li> Click <strong>Show more</strong> and fill out the form following the instruction below</li>
+                        <ul>
+                            <li><strong>Activity name</strong> : Fill activity name as you want</li>
+                            <li><strong>Launch Container</strong> : Select <strong>New window</strong> <i style="color: grey;">(other option will not work)</i></li>
+                            <li><strong>Consumer Key</strong> : rtey23</li>
+                            <li><strong>Secret Shared</strong> : dhabty3</li>
+                            <li><strong>Tool URL</strong> : http://localhost:8000/lti/assignment/{{ soal.id }}/ <i style="color: grey;">(unique link based on your assignment)</i></li>
+                        </ul>
+                        <li> Make sure all checkbox is checked in the <strong>Privacy</strong> section</li>
+                        <li> <strong>Save and Display</strong></li>
+                    </ol>
+                </div>
+            </div>
         </div>
         <div class="row my-5">
             <div class="col">
-                <h4 class="heading-section">Gradebook</h4>
-                <div class="table-wrap">
+                <h4 class="heading-section" style="color: gray;"">Gradebook</h4>
+                <div class=" table-wrap">
                     <table class="table table-striped"">
                         <thead>
                           <tr>
@@ -73,16 +101,16 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!-- Footer-->
 <footer class="footer py-4">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2021</div>
+            <div class="col-lg-4 text-lg-start">Copyright &copy; Togra 2022</div>
             <div class="col-lg-4 my-3 my-lg-0">
                 <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
                 <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>

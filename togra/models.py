@@ -15,7 +15,7 @@ class Soal(models.Model):
 
 class Pertanyaan(models.Model):
     instruksi = models.TextField()
-    jawaban_benar = models.TextField(null=True, default="")
+    jawaban_benar = models.TextField(null=True, default="Answer")
     pyfile = models.FileField(null=True, upload_to="python/", default="No Data")
     soal_id = models.ForeignKey(Soal, on_delete=models.CASCADE)
 

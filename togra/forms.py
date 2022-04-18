@@ -2,7 +2,7 @@ from dataclasses import field, fields
 from fileinput import FileInput
 from re import template
 from django import forms
-from django.forms import ModelForm, TextInput, modelformset_factory
+from django.forms import ModelForm, TextInput, inlineformset_factory, modelformset_factory
 from togra.models import *
 from tempus_dominus.widgets import TimePicker
 from django.contrib.auth.forms import UserCreationForm
@@ -73,7 +73,8 @@ FormQuestSet = modelformset_factory(
     },
 )
 
-FormEditQuestEsSet = modelformset_factory(
+FormEditQuestEsSet = inlineformset_factory(
+    Soal,
     Pertanyaan,
     fields=('instruksi', 'jawaban_benar'),
     extra=0,
@@ -88,7 +89,8 @@ FormEditQuestEsSet = modelformset_factory(
     },
 )
 
-FormEditQuestPySet = modelformset_factory(
+FormEditQuestPySet = inlineformset_factory(
+    Soal,
     Pertanyaan,
     fields=('instruksi', 'pyfile'),
     extra=0,

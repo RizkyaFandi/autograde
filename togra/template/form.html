@@ -25,8 +25,14 @@
             <i class="fas fa-bars ms-1"></i>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-            <h2 style="color: white;">{{ user }}</h2>
-            <a href="/logout/" type="button" class="btn btn-primary btn-sm ms-2">Logout</a>
+            <div class="row d-flex align-items-center">
+                <div class="col mt-2">
+                    <h4 style="color: white;">{{ user }}</h4>
+                </div>
+                <div class="col">
+                    <a href="/logout/" type="button" class="btn btn-primary btn-sm">Logout</a>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -51,7 +57,7 @@
                                         {% for fo in formset %}
                                         <div class="row form-row mt-5" id="form_template">
                                             <div class="col" id="questnum">
-                                                <h4 class="num">Question 1</h4>
+                                                <h4 class="num" style="color: gray;">Question 1</h4>
                                             </div>
                                             <div class="col">
                                                 <div class="float-end">
@@ -97,7 +103,7 @@
 <footer class="footer py-4">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2021</div>
+            <div class="col-lg-4 text-lg-start">Copyright &copy; Togra 2022</div>
             <div class="col-lg-4 my-3 my-lg-0">
                 <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-twitter"></i></a>
                 <a class="btn btn-dark btn-social mx-2" href="#!"><i class="fab fa-facebook-f"></i></a>
